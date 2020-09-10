@@ -1,34 +1,34 @@
 {#{% load staticfiles %}#}
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>信息管理系统_用户登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>信息管理系统_用户登录</title>
 
-<link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap-3.3.7-dist/css/bootstrap.css' %}" rel="stylesheet">
 </head>
 <body>
 
 <form method="post" action="{% url "Index:login" %}">
     <div class="input-group margin-bottom-sm  ">
-      <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-      <input class="form-control" name="username" type="text" placeholder="账号">
+        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+        <input class="form-control" name="username" type="text" placeholder="账号">
     </div>
     <div class="input-group">
-      <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-      <input class="form-control" name="password" type="password" placeholder="密码">
-    </div >
-        {% csrf_token %}
-	<p> <font color="#999">记住账号</font>
-		<input  id="saveid" type="checkbox"  onclick="savePaw();"  />
-	</p>
+        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+        <input class="form-control" name="password" type="password" placeholder="密码">
+    </div>
+    {% csrf_token %}
+    <p><font color="#999">记住账号</font>
+        <input id="saveid" type="checkbox" onclick="savePaw();"/>
+    </p>
     <input type="submit" class="btn  btn-info top5" value="登录">
     <a href="{% url 'Index:index' %}" class="btn  btn-info top5">取消</a>
 </form>
 
-<script type="text/javascript" src="{%  static 'easyui/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{%  static 'easyui/jquery.easyui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'easyui/jquery.easyui.min.js' %}"></script>
 <script>
 
 </script>
