@@ -12,17 +12,18 @@ class IndexView(View):
 
 
 class AdminView(View):
-    def get(self,request):
-        result=Book.objects.all()
-        return render(request, 'admin.html',{"result": result})
+    def get(self, request):
+        result = Book.objects.all()
+        return render(request, 'admin.html', {"result": result})
 
 
 class LoginView(View):
     # 后台登录页面
-    def get(self,request):
-        return render(request, 'login.html')
+    def get(self, request):
+        error_msg = ''
+        return render(request, 'login.html', {'error_msg': error_msg})
 
-    def post(self,request):
+    def post(self, request):
         # 登录校验接收数据
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -30,9 +31,10 @@ class LoginView(View):
             admin = Admin.objects.get(username=username, password=password)
             request.session['username'] = username
             data = {'msg': '登录成功', 'success': True}
+            error_msg = '登录成功'
             return redirect("Index:adminView")
         except Admin.DoesNotExist:
             # 用户名密码错误
             data = {'msg': '登录失败', 'success': False}
-            return render(request, 'login.html')
-
+            error_msg = '用户名或密码错误'
+            return render(request, 'login.html', {'error_msg': error_msg})
