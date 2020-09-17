@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include, url
-from django.views.static import serve #需要导入
+from django.views.static import serve  # 需要导入
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),#这部分很重要
-    url(r'^BookType/', include('apps.BookType.urls', namespace='BookType')), # 图书类别模块
-    url(r'^Book/', include('apps.Book.urls', namespace='Book')), # 图书模块
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),  # 这部分很重要
+    url(r'^BookType/', include('apps.BookType.urls', namespace='BookType')),  # 图书类别模块
+    url(r'^Book/', include('apps.Book.urls', namespace='Book')),  # 图书模块
     url(r'^', include("apps.Index.urls", namespace="Index")),  # 首页模块
     # url(r'^tinymce/', include('tinymce.urls')),
 ]

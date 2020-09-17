@@ -7,18 +7,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8970c6e6-3e55-414c-a28e-0eaf807d3cc3" name="Default Changelist" comment="&quot;v1.0&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PythonProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonProject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/Book/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Book/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/BookType/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/BookType/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/BookType/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/BookType/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/Index/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Index/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Book/book_all.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Book/book_all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Book/book_frontAdd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Book/book_frontAdd.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Book/book_frontModify.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Book/book_frontModify.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Book/book_frontquery_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Book/book_frontquery_result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Book/book_frontshow.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Book/book_frontshow.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/BookType/bookType_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/BookType/bookType_add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/BookType/bookType_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/BookType/bookType_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/BookType/bookType_frontquery_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/BookType/bookType_frontquery_result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/slider/slide_02_2000x410.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/slider/slide_02_2000x410.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
     </list>
@@ -95,6 +89,9 @@
       <workItem from="1599699009940" duration="11605000" />
       <workItem from="1600077677079" duration="423000" />
       <workItem from="1600137175852" duration="4826000" />
+      <workItem from="1600142157497" duration="48000" />
+      <workItem from="1600151334074" duration="4431000" />
+      <workItem from="1600302252069" duration="7181000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;v1.0&quot;">
       <created>1599709849765</created>
@@ -147,6 +144,11 @@
             </State>
           </value>
         </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
       </map>
     </option>
     <option name="OPEN_GENERIC_TABS">
@@ -154,6 +156,7 @@
         <entry key="1" value="TOOL_WINDOW" />
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

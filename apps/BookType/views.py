@@ -7,21 +7,22 @@ from django.shortcuts import render, HttpResponse, redirect
 
 
 class FrontAddView(View):
-    def get(self,request):
+    def get(self, request):
         return render(request, 'BookType/bookType_add.html')
-    def post(self,request):
+
+    def post(self, request):
         print("添加图书类型************************")
         id = request.POST.get("bookType_Id")
         name = request.POST.get("bookType_Name")
         day = request.POST.get("bookType_Day")
         print(id, name, day)
-        BookType.objects.create(bookTypeId=id,bookTypeName=name,days=day)
-        print(id,name,day)
+        BookType.objects.create(bookTypeId=id, bookTypeName=name, days=day)
+        print(id, name, day)
         return redirect("BookType:frontList")
 
 
 class ListAllView(View):
-    def get(self,request):
+    def get(self, request):
         bookTypes = BookType.objects.all()
         bookTypeList = []
         for bookType in bookTypes:
@@ -30,16 +31,18 @@ class ListAllView(View):
                 'bookTypeName': bookType.bookTypeName,
             }
             bookTypeList.append(bookTypeObj)
-        return JsonResponse(bookTypeList,safe=False)
+        return JsonResponse(bookTypeList, safe=False)
+
 
 class FrontEditView(View):
-    def get(self,request):
-        type_Id=request.GET.get("type_Id")
+    def get(self, request):
+        type_Id = request.GET.get("type_Id")
         type_Name = request.GET.get("type_Name")
         type_Day = request.GET.get("type_Day")
-        return render(request, "BookType/bookType_edit.html", {"bookType_Id": type_Id, "bookType_Name": type_Name,"bookType_Day":type_Day})
+        return render(request, "BookType/bookType_edit.html",
+                      {"bookType_Id": type_Id, "bookType_Name": type_Name, "bookType_Day": type_Day})
 
-    def post(self,request):
+    def post(self, request):
         id = request.POST.get("bookType_Id")
         name = request.POST.get("bookType_Name")
         day = request.POST.get("bookType_Day")
@@ -48,16 +51,16 @@ class FrontEditView(View):
         print(id, name, day)
         return redirect("BookType:frontList")
 
+
 class FrontDeleteView(View):
-    def get(self,request):
+    def get(self, request):
         type_Id = request.GET.get("type_Id")
         BookType.objects.filter(bookTypeId=type_Id).delete()
         return redirect("BookType:frontList")
 
 
-
 class FrontListView(View):
-    def get(self,request):
+    def get(self, request):
         pageSize = 5
         currentPage = request.GET.get("currentPage")
         bookTypes = BookType.objects.all()
@@ -76,17 +79,16 @@ class FrontListView(View):
         # 获取第page页的Page实例对象
         bookTypes_page = paginator.page(currentPage)
 
-        startIndex = (currentPage - 1) * pageSize #计算起始序号
-
+        startIndex = (currentPage - 1) * pageSize  # 计算起始序号
 
         startPage = currentPage - 5
         endPage = currentPage + 5
         if startPage < 1:
-            startPage=1
+            startPage = 1
         if endPage > totalPage:
             endPage = totalPage;
 
-        pageList = list(range(startPage,endPage+1))
+        pageList = list(range(startPage, endPage + 1))
 
         context = {
             'bookTypes_page': bookTypes_page,
@@ -102,9 +104,5 @@ class FrontListView(View):
         # 使用模板
         return render(request, 'BookType/bookType_frontquery_result.html', context)
 
-
-    def post(self,request):
+    def post(self, request):
         pass
-
-
-

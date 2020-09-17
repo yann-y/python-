@@ -3,6 +3,22 @@ from django.views.generic import View
 from apps.Index.models import Admin
 from django.shortcuts import redirect
 from apps.Book.models import Book
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+
+def login_auth(func):
+    def inner(request, *args, **kwargs):
+        url = request.get_full_path()
+        session_name = request.session.get('username')
+        print(session_name)
+        if request.session.get('username'):
+            res = func(request, *args, **kwargs)
+            return res
+        else:
+            return redirect('/login')
+
+    return inner
 
 
 class IndexView(View):
@@ -13,6 +29,7 @@ class IndexView(View):
 
 class AdminView(View):
     def get(self, request):
+        # username = request.session.get('username', '')
         result = Book.objects.all()
         return render(request, 'admin.html', {"result": result})
 

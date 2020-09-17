@@ -6,11 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>信息管理系统_用户登录</title>
     <link rel="icon" href="https://image.youis.top/00.png" sizes="32x32">
-    <link href="{% static 'plugins/bootstrap-3.3.7-dist/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+    <link href="{% static 'css/head.css' %}" rel="stylesheet">
     <link rel='stylesheet' href="{% static 'css/login.css' %}">
+
 </head>
 <body>
+{#   这是主页的页头部分  #}
+{% include 'header.html' %}
 <div class="container">
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <form method="post" action="{% url "Index:login" %}" class="form-horizontal">
@@ -20,7 +31,7 @@
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
-                    <input type="password" class="form-control" id="inputPassword3"  name="password" placeholder="密　码">
+                    <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="密　码">
                     <i class="fa fa-lock"></i>
                     <a href="#" class="fa fa-question-circle"></a>
                 </div>

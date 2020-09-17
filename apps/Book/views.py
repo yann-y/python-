@@ -1,6 +1,6 @@
 from django.views.generic import View
 from apps.BaseView import BaseView
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.core.paginator import Paginator
 from apps.Book.models import Book
 from apps.BookType.models import BookType
@@ -10,6 +10,8 @@ from apps.BaseView import ImageFormatException
 from django.conf import settings
 import pandas as pd
 import os
+from django.utils.decorators import method_decorator
+from apps.Index.views import *
 
 
 class FrontAddView(BaseView):  # 前台图书添加
@@ -20,7 +22,7 @@ class FrontAddView(BaseView):  # 前台图书添加
         except Book.DoesNotExist:
             return False
 
-    def get(self,request):
+    def get(self, request):
         bookTypes = BookType.objects.all()  # 获取所有图书类型
         context = {
             'bookTypes': bookTypes,
@@ -28,12 +30,12 @@ class FrontAddView(BaseView):  # 前台图书添加
         # 使用模板
         return render(request, 'Book/book_frontAdd.html', context)
 
-    def post(self,request):
-        barcode = request.POST.get('book.barcode') # 判断图书条形码是否存在
+    def post(self, request):
+        barcode = request.POST.get('book.barcode')  # 判断图书条形码是否存在
         if self.primaryKeyExist(barcode):
             return JsonResponse({'success': False, 'message': '图书条形码已经存在'})
 
-        book = Book() # 新建一个图书对象然后获取参数
+        book = Book()  # 新建一个图书对象然后获取参数
         book.barcode = barcode
         book.bookName = request.POST.get('book.bookName')
         book.bookTypeObj = BookType.objects.get(bookTypeId=int(request.POST.get('book.bookTypeObj.bookTypeId')))
@@ -42,12 +44,12 @@ class FrontAddView(BaseView):  # 前台图书添加
         book.publishDate = request.POST.get('book.publishDate')
         book.publish = request.POST.get('book.publish')
         try:
-            book.bookPhoto = self.uploadImageFile(request,'book.bookPhoto')
+            book.bookPhoto = self.uploadImageFile(request, 'book.bookPhoto')
         except ImageFormatException as ife:
             return JsonResponse({'success': False, 'message': ife.error})
         book.bookDesc = request.POST.get('book.bookDesc')
-        book.bookFile = self.uploadCommonFile(request,'book.bookFile')
-        book.save() # 保存图书信息到数据库
+        book.bookFile = self.uploadCommonFile(request, 'book.bookFile')
+        book.save()  # 保存图书信息到数据库
         return JsonResponse({'success': True, 'message': '保存成功'})
 
 
@@ -56,21 +58,23 @@ class FrontModifyView(BaseView):  # 前台修改图书
         context = {"barcode": barcode}
         return render(request, 'Book/book_frontModify.html', context)
 
+
 class FrontAllView(BaseView):
     def get(self, request):
         return self.handle(request)
-    def handle(self,request):
-        print("1")
+
+    def handle(self, request):
+        # print("1")
         self.getCurrentPage(request)  # 获取当前要显示第几页
         # 下面获取查询参数
         barcode = ''
         bookName = ''
         publishDate = ''
         bookTypeObj_bookTypeId = '0'
-        print("2")
-        print(barcode,bookName,publishDate,bookTypeObj_bookTypeId)
+        # print("2")
+        # print(barcode, bookName, publishDate, bookTypeObj_bookTypeId)
         # 然后条件组合查询过滤
-        book = Book.objects.all()
+        book = Book.objects.all().order_by('barcode')
         if barcode != '':
             book = book.filter(barcode__contains=barcode)
         if bookName != '':
@@ -103,7 +107,9 @@ class FrontAllView(BaseView):
             'pageList': self.pageList,
         }
         # 渲染模板界面
+        print(self.currentPage)
         return render(request, 'Book/book_all.html', context)
+
 
 class FrontListView(BaseView):  # 前台图书查询列表
     def get(self, request):
@@ -112,7 +118,7 @@ class FrontListView(BaseView):  # 前台图书查询列表
     def post(self, request):
         return self.handle(request)
 
-    def handle(self,request):
+    def handle(self, request):
         self.getCurrentPage(request)  # 获取当前要显示第几页
         # 下面获取查询参数
         barcode = self.getStrParam(request, 'barcode')
@@ -120,9 +126,9 @@ class FrontListView(BaseView):  # 前台图书查询列表
         publishDate = self.getStrParam(request, 'publishDate')
         bookTypeObj_bookTypeId = self.getIntParam(request, 'bookTypeObj.bookTypeId')
 
-        print(barcode,bookName,publishDate,bookTypeObj_bookTypeId)
+        print(barcode, bookName, publishDate, bookTypeObj_bookTypeId)
         # 然后条件组合查询过滤
-        book = Book.objects.all()
+        book = Book.objects.all().order_by("barcode")
         if barcode != '':
             book = book.filter(barcode__contains=barcode)
         if bookName != '':
@@ -152,7 +158,7 @@ class FrontListView(BaseView):  # 前台图书查询列表
             'totalPage': self.totalPage,
             'recordNumber': self.recordNumber,
             'startIndex': self.startIndex,
-            'pageList': self.pageList,
+            'pageList': self.pageList
         }
         # 渲染模板界面
         return render(request, 'Book/book_frontquery_result.html', context)
@@ -168,6 +174,7 @@ class FrontShowView(View):  # 前台显示图片详情页
             'book': book
         }
         # 渲染模板显示
+        print(context)
         return render(request, 'Book/book_frontshow.html', context)
 
 
@@ -254,7 +261,7 @@ class ListView(BaseView):  # 后台图书列表
         # 使用模板
         return render(request, 'Book/book_query_result.html')
 
-    def post(self,request):
+    def post(self, request):
         # 获取当前要显示第几页和每页几条数据
         self.getPageAndSize(request)
         # 收集查询参数
@@ -289,7 +296,7 @@ class ListView(BaseView):  # 后台图书列表
             'total': self.recordNumber,
         }
         # 渲染模板页面显示
-        return JsonResponse(book_res, json_dumps_params={'ensure_ascii':False})
+        return JsonResponse(book_res, json_dumps_params={'ensure_ascii': False})
 
 
 class DeletesView(BaseView):  # 删除图书信息
@@ -316,7 +323,7 @@ class DeletesView(BaseView):  # 删除图书信息
 
 
 class OutToExcelView(BaseView):  # 导出图书信息到excel并下载
-    def get(self,request):
+    def get(self, request):
         # 收集查询参数
         barcode = self.getStrParam(request, 'barcode')
         bookName = self.getStrParam(request, 'bookName')
@@ -332,7 +339,7 @@ class OutToExcelView(BaseView):  # 导出图书信息到excel并下载
             books = books.filter(publishDate__contains=publishDate)
         if bookTypeObj_bookTypeId != '0':
             books = books.filter(bookTypeObj=bookTypeObj_bookTypeId)
-        #将查询结果集转换成列表
+        # 将查询结果集转换成列表
         bookList = []
         for book in books:
             book = book.getJsonObj()
@@ -353,7 +360,7 @@ class OutToExcelView(BaseView):  # 导出图书信息到excel并下载
         pf.rename(columns=columns_map, inplace=True)
         # 将空的单元格替换为空字符
         pf.fillna('', inplace=True)
-        #设定文件名和导出路径
+        # 设定文件名和导出路径
         filename = 'books.xlsx'
         # 这个路径可以在settings中设置也可以直接手动输入
         root_path = settings.MEDIA_ROOT + '/output/'
@@ -365,8 +372,3 @@ class OutToExcelView(BaseView):  # 导出图书信息到excel并下载
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename="books.xlsx"'
         return response
-
-
-
-
-
